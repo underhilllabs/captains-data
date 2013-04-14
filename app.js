@@ -19,6 +19,7 @@ app.use(express.bodyParser());
 app.enable("jsonp callback");
 app.get('/api/captains', api.captains);
 app.post('/api/captain', api.addCaptain);
+app.put('/api/captain/:id', api.updateCaptain);
 
 var port = 8080;
 app.listen(port);

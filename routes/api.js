@@ -1,7 +1,7 @@
 // initialize our faux database
 var data = {
   "captains": [
-    {"name": "Jean-Luc Picard","image": "img/picard.jpg", "source": "Star Trek: TNG", "votes": 2, index: 1}
+    {"name": "Jean-Luc Picard","image": "img/picard.jpg", "source": "Star Trek: TNG", "votes": 2, index: 0}
     , {"name": "James Tiberius Kirk","image": "img/kirk.jpg", "source": "Star Trek: TOS", "votes": 0, index: 1}
     , {"name": "Kathryn Janeway", "image": "img/janeway.jpg", "source": "Star Trek Voyager ", "votes": 0, index: 2}
     , {"name": "Hikaru Sulu", "image": "img/sulu.jpg", "source": "Star Trek Movies", "votes": 1, index: 3}
@@ -24,7 +24,6 @@ exports.captains = function (req, res) {
       source: post.source,
       votes: post.votes,
       index: post.index,
-      ship: "nevermind"
     });
   });
   res.type('application/json');
@@ -45,10 +44,20 @@ exports.captain = function (req, res) {
 };
 exports.addCaptain = function(req, res) {
   // POST
-  console.log("received post!" + req.body.cptName);
-  captain = {name: req.body.cptName, image: req.body.cptUrl, source: req.body.cptSource, votes: 1, index: data.captains.length};
+  console.log("received post! -> " + req.body.cptName);
+  captain = {name: req.body.cptName, image: req.body.cptUrl, source: req.body.cptSource, votes: req.body.votes, index: req.body.index};
   data.captains.push(captain);
   //data.captains.push(req.body);
 
   res.json(req.body);
 };
+exports.updateCaptain = function(req, res) {
+  var id = req.params.id;
+  if (id >= 0 && id < data.captains.length) {
+    //captain = {name: req.body.cptName, image: req.body.cptUrl, source: req.body.cptSource, votes: req.body.votes, index: req.body.index};
+    data.captains[id] = req.body;
+    res.json(true);
+  } else {
+    res.json(false);
+  }
+}
