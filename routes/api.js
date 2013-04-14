@@ -11,9 +11,9 @@ var data = {
     , {"name": "Han Solo","image": "img/solo.jpg", "source": "Star Wars", "votes": 0, index: 7}
   ]
 };
- 
+
 // GET
- 
+
 exports.captains = function (req, res) {
   var captains = [];
   data.captains.forEach(function (post, i) {
@@ -32,7 +32,7 @@ exports.captains = function (req, res) {
     captains: data.captains
   });
 };
- 
+
 exports.captain = function (req, res) {
   var id = req.params.id;
   if (id >= 0 && id < data.captains.length) {
@@ -42,4 +42,13 @@ exports.captain = function (req, res) {
   } else {
     res.json(false);
   }
+};
+exports.addCaptain = function(req, res) {
+  // POST
+  console.log("received post!" + req.body.cptName);
+  captain = {name: req.body.cptName, image: req.body.cptUrl, source: req.body.cptSource, votes: 1, index: data.captains.length};
+  data.captains.push(captain);
+  //data.captains.push(req.body);
+
+  res.json(req.body);
 };
