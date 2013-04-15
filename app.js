@@ -18,6 +18,22 @@ var app = module.exports = express();
 app.use(allowCrossDomain);
 app.use(express.bodyParser());
 app.enable("jsonp callback");
+
+//var mongoose = require( 'mongoose' );
+//
+//var cptnSchema = new mongoose.Schema({
+// name: String,
+// source: String,
+// votes: Number,
+// index: Number,
+// image: String,
+// ship: String
+//});
+//var CaptainModel = mongoose.model( 'Captain', cptnSchema );
+//mongoose.connect( 'mongodb://localhost/captains' );
+//var data = CaptainModel.find();
+//console.log("first: " + data[0]);
+
 app.get('/api/captains', api.captains);
 app.post('/api/captain', api.addCaptain);
 app.put('/api/captain/:id', api.updateCaptain);

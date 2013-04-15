@@ -1,4 +1,6 @@
 // initialize our faux database
+var mongoose = require('mongoose');
+var CaptainModel = mongoose.model('Captain');
 var data = {
   "captains": [
     {"name": "Jean-Luc Picard","image": "img/picard.jpg", "source": "Star Trek: TNG", "votes": 2, index: 0}
@@ -15,20 +17,23 @@ var data = {
 // GET
 
 exports.captains = function (req, res) {
-  var captains = [];
-  data.captains.forEach(function (post, i) {
-    captains.push({
-      id: i,
-      name: post.name,
-      image: post.image,
-      source: post.source,
-      votes: post.votes,
-      index: post.index,
+  var captainsArr = [];
+  CaptainModel.find({}, function(err, docs) {
+    for (i = 0; i < docs.length; i++) {
+      captainsArr.push({
+        id: i,
+        name: docs[i].name,
+        image: docs[i].image,
+        source: docs[i].source,
+        votes: docs[i].votes,
+        index: docs[i].index,
+      });
+      console.log("name: " + docs[i].name);
+    }
+    res.type('application/json');
+    res.jsonp({
+      captains: captainsArr
     });
-  });
-  res.type('application/json');
-  res.jsonp({
-    captains: data.captains
   });
 };
 

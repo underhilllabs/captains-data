@@ -8,7 +8,7 @@ var cptnSchema = new mongoose.Schema({
  image: String,
  ship: String
 });
-mongoose.model( 'Captain', cptnSchema );
+var CaptainModel = mongoose.model( 'Captain', cptnSchema );
 
 mongoose.connect( 'mongodb://localhost/captains' );
 
