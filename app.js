@@ -11,8 +11,9 @@ var allowCrossDomain = function(req, res, next) {
       next();
     }
 };
-var express = require('express'),
-  api = require('./routes/api');
+var express = require('express')
+  , db = require('./model/db')
+  , api = require('./routes/api');
 var app = module.exports = express();
 app.use(allowCrossDomain);
 app.use(express.bodyParser());
