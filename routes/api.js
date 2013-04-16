@@ -1,10 +1,10 @@
-// initialize our faux database
+// initialize MongoDB 
 var mongoose = require('mongoose');
 var CaptainModel = mongoose.model('Captain');
 var captainsArr = [];
 var data = {};
 
-// GET
+// GET /api/captains -> all captain
 exports.captains = function (req, res) {
   // need to reset array each time this function is called.
   captainsArr = [];
@@ -27,6 +27,7 @@ exports.captains = function (req, res) {
   });
 };
 
+// GET /api/captain/:id
 exports.captain = function (req, res) {
   var id = req.params.id;
   if (id >= 0 && id < data.captains.length) {
@@ -37,6 +38,8 @@ exports.captain = function (req, res) {
     res.json(false);
   }
 };
+
+// POST /api/captain
 exports.addCaptain = function(req, res) {
   // POST
   console.log("received post! -> " + req.body.cptName);
@@ -55,13 +58,11 @@ exports.addCaptain = function(req, res) {
     }
   });
   captainsArr[idx] = captain;
-  //captain = {name: req.body.cptName, image: req.body.cptUrl, source: req.body.cptSource, votes: req.body.votes, index: req.body.index};
-  //data.captains.push(captain);
-  //data.captains.push(req.body);
 
   res.json(req.body);
 };
-// PUT
+
+// PUT /api/captain/:id
 exports.updateCaptain = function(req, res) {
   var id = req.params.id;
   if (id >= 0 && id < captainsArr.length) {
